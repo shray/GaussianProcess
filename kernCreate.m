@@ -15,7 +15,10 @@ if type == strcat('RBF','Linear','Bias')
     noise_var = params(3);
     K = width * exp((-1/(2*rbf_var)) * dist2(data1,data2));
     % add the noise
-    K = K + noise_var * eye(size(K,1));
+    %K = K + noise_var * eye(size(K,1));
+    % if the distance is zero
+    zero_dist = find(K == width);
+    K(zero_dist) = K(zero_dist) + noise_var;
 end
 
 end
