@@ -1,9 +1,9 @@
-function [ K, invK ] = kernCreate( params, data, type )
+function [ K ] = kernCreate( params, data1, data2, type )
 %KERNCREATE Creates the kernel matrix. Currently only implements
 %RBF + Linear + Bias
 
 
-if (nargin <3)
+if (nargin <4)
     type = strcat('RBF','Linear','Bias');
 end
 
@@ -13,10 +13,9 @@ if type == strcat('RBF','Linear','Bias')
     width = params(1);
     rbf_var = params(2);
     noise_var = params(3);
-    K = width * exp((-1/(2*rbf_var)) * dist2(data,data));
+    K = width * exp((-1/(2*rbf_var)) * dist2(data1,data2));
     % add the noise
     K = K + noise_var * eye(size(K,1));
-    invK = pdinv(K);
 end
 
 end
